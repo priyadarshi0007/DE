@@ -51,5 +51,5 @@ def fetch_public_holidays(years, country=cc):
     return df_cleaned   
 
 logging.info(f"Country: {cc} | ISO Region: {iso_region} | Years fetched: {years}")
-df_holidays = fetch_public_holidays(years, country=cc)
-print(df_holidays)
+# df_holidays = fetch_public_holidays(years, country=cc)
+# print(df_holidays)

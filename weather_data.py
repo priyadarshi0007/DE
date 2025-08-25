@@ -42,11 +42,13 @@ def fetch_weather_data(latitude, longitude, start_date, end_date):
         daily_dataframe = pd.DataFrame(data=daily_data)
         daily_dataframe["date"] = daily_dataframe["date"].dt.date
         logging.info("Weather DataFrame created with %d rows and %d columns", daily_dataframe.shape[0], daily_dataframe.shape[1])
+        daily_dataframe = daily_dataframe.dropna(subset=["temperature_2m_max", "temperature_2m_min", "precipitation_sum"])
+        logging.info("After dropping NA values, %d rows remain", daily_dataframe.shape[0])
         return daily_dataframe
     except Exception as e:
         logging.error("Error fetching weather data: %s", e, exc_info=True)
         return pd.DataFrame()
     
 logging.info("Starting weather data fetch process")
-df_weather = fetch_weather_data(latitude, longitude, start_date, end_date)
-print(df_weather)
+# df_weather = fetch_weather_data(latitude, longitude, start_date, end_date)
+# print(df_weather)
