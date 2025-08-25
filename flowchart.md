@@ -1,3 +1,4 @@
+```mermaid
 flowchart TD
     A[main.py] --> B[city_time_interval.py]
     A --> C[publicholiday.py]
@@ -15,3 +16,4 @@ flowchart TD
     K -->|save_df_to_sqlite| L[Save to deproject.db, weather_data table]
 
     E -->|Provides| M[save_df_to_sqlite, run_query]
+```
