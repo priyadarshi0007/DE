@@ -5,7 +5,8 @@ import logging
 
 geolocator = Nominatim(user_agent="DE_Project/1.0")
 
-PRIMARY_CITY = "Boston, MA"  
+#PRIMARY_CITY = "Boston, MA"  
+PRIMARY_CITY = input("Enter the primary city (default 'Boston, MA'): ").strip() or "Boston, MA"
 FALLBACK_CITY = "New York, NY"   # always hard-coded fallback
 
 def get_lat_long(city: str) -> tuple[float, float, str]:
