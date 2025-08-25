@@ -13,7 +13,14 @@ from ds_utils import save_df_to_sqlite
 from city_time_interval import latitude, longitude, start_date, end_date, cc, years
 
 # ---------- logging ----------
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+import os
+log_file = os.path.join(os.path.dirname(__file__), "pipeline.log")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    filename=log_file,
+    filemode="a"
+)
 log = logging.getLogger(__name__)
 
 
