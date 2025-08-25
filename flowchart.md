@@ -1,19 +1,24 @@
 ```mermaid
 flowchart TD
-    A[main.py] --> B[city_time_interval.py]
-    A --> C[publicholiday.py]
-    A --> D[weather_data.py]
-    A --> E[ds_utils.py]
+    A[User Input: City Name] --> B[city_time_interval.py]
+    B -->|Geocode City| C{Success?}
+    C -- Yes --> D[Get latitude, longitude, ISO region, country code, years, start_date, end_date]
+    C -- No --> E[Fallback City]
+    E -->|Geocode Fallback| D
 
-    B -->|Provides| F[latitude, longitude, start_date, end_date, used_city, iso_region, cc, years]
+    D --> F[main.py]
+    F -->|Validate Inputs| G{Valid?}
+    G -- No --> H[Exit with Error]
+    G -- Yes --> I[Fetch Public Holidays]
+    I -->|publicholiday.py| J[fetch_public_holidays()]
+    J --> K[public holidays DataFrame]
+    K -->|save_df_to_sqlite| L[SQLite DB: public_holidays table]
 
-    C -->|fetch_public_holidays years, cc| G[Fetch public holidays from API]
-    G -->|Returns DataFrame| H[public_holidays DataFrame]
-    H -->|save_df_to_sqlite| I[Save to deproject.db, public_holidays table]
+    F -->|Fetch Weather Data| M[weather_data.py]
+    M --> N[fetch_weather_data()]
+    N --> O[weather data DataFrame]
+    O -->|save_df_to_sqlite| P[SQLite DB: weather_data table]
 
-    D -->|fetch_weather_data lat, lon, start, end| J[Fetch weather data from Open-Meteo API]
-    J -->|Returns DataFrame| K[weather_data DataFrame]
-    K -->|save_df_to_sqlite| L[Save to deproject.db, weather_data table]
-
-    E -->|Provides| M[save_df_to_sqlite, run_query]
+    L & P --> Q[_ensure_indexes()]
+    Q --> R[Done]
 ```
